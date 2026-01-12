@@ -1,0 +1,34 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Maven Wrapper
+# https://maven.apache.org/wrapper/#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Intellij IDEA
+.idea/
+*.iml
+*.iws
+
+# VS Code
+.vscode/
+
+### Appium library auto-generated files / folders
+# Extent-Report
+test-output/
+
+
+# App Test (Should generated from project repository)
+src/test/java/resources/WeOffice.apk

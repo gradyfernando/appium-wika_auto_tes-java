@@ -13,9 +13,15 @@ public class DetailUndanganPage extends AndroidActions {
 	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnApprove")
 	private WebElement approveButton;
 
-    public DetailUndanganPage(AndroidDriver driver) {
+    public DetailUndanganPage(AndroidDriver driver, String undanganId) {
         super(driver);
+        setActivity(undanganId);
+
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    }
+
+    public void setActivity(String undanganId) {
+        driver.get("weoffice://undangan/detail?id=" + undanganId);
     }
 
     public void clickApprove() {

@@ -3,12 +3,7 @@ package co.id.gradyfernando.model;
 import java.util.Objects;
 
 public class BaseRecords<T> {
-    private final T records;
-
-    // Constructor
-    public BaseRecords(T records) {
-        this.records = records;
-    }
+    private T records;
 
     // Getter
     public T getRecords() {

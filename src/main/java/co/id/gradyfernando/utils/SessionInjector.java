@@ -1,5 +1,6 @@
 package co.id.gradyfernando.utils;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,6 @@ import io.appium.java_client.android.AndroidDriver;
 public class SessionInjector {
 
     public static void injectToken(AndroidDriver driver, String token) {
-        System.err.println(" =============== " );
         driver.executeScript("mobile: shell", Map.of(
             "command", "am",
             "args", List.of(
@@ -19,15 +19,41 @@ public class SessionInjector {
                 "--es", "token", token
             )
         ));
-        System.err.println("token: " + token);
     }
 
     public static void injectData(AndroidDriver driver, String param, String data) {
-
+        driver.executeScript("mobile: shell", Map.of(
+            "command", "am",
+            "args", List.of(
+                "broadcast",
+                "-n", "co.id.integra.weoffice/.core.test.TestDataSessionReceiver",
+                "-a", "co.id.integra.weoffice.TestDataSession",
+                "--es", param, data
+            )
+        ));
     }
 
     public static void injectDataMap(AndroidDriver driver, Map<String, String> dataMap) {
+        List<String> intentArgs = new ArrayList<>();
 
+        dataMap.forEach((k, v) -> {
+            intentArgs.add("--es");
+            intentArgs.add(k);
+            intentArgs.add(v);
+        });
+
+        List<String> args = new ArrayList<>();
+        args.add("broadcast");
+        args.add("-n");
+        args.add("co.id.integra.weoffice/.core.test.TestDataSessionReceiver");
+        args.add("-a");
+        args.add("co.id.integra.weoffice.TestDataSession");
+        args.addAll(intentArgs);
+
+        driver.executeScript("mobile: shell", Map.of(
+            "command", "am",
+            "args", args
+        ));
     }
 
     public static void injectXml(AndroidDriver driver, String token) {

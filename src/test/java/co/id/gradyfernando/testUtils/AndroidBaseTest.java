@@ -1,8 +1,7 @@
 package co.id.gradyfernando.testUtils;
 
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +11,8 @@ import java.util.Properties;
 
 import co.id.gradyfernando.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 
@@ -21,7 +22,7 @@ public class AndroidBaseTest extends AppiumUtils {
 	public AndroidDriver driver;
 	// public LoginPage loginPage;
 	
-	@BeforeMethod(alwaysRun = true)
+	@BeforeClass(alwaysRun = true)
 	public void startAppiumServer() throws URISyntaxException, IOException {
 		Properties properties = new Properties();
 		FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/co/id/gradyfernando/resources/data.properties");
@@ -45,7 +46,11 @@ public class AndroidBaseTest extends AppiumUtils {
 		// loginPage = new LoginPage(driver);
 	}
 
-	@AfterMethod(alwaysRun = true)
+	public void backButton() {
+		driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
+	}
+
+	@AfterClass(alwaysRun = true)
 	public void tearDown() {
         driver.quit();
         service.stop();

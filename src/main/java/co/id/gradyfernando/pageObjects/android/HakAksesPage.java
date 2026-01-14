@@ -46,6 +46,7 @@ public class HakAksesPage extends AndroidActions {
             
             if (roleName.toLowerCase().contains(role.toLowerCase())) {
                 roleElements.get(i).click();
+                break;
             }
         }
         

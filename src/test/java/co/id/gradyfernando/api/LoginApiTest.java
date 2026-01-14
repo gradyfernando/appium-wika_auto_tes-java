@@ -29,7 +29,7 @@ public class LoginApiTest {
             .given()
             	.log().all()
             	.header("Accept", "application/json")
-            	.baseUri(ApiConfig.BASE_URL)
+            	.baseUri(ApiConfig.BASE_API_URL)
                 .contentType(ContentType.URLENC)
                 .formParams(formParams)
             .post(Route.LOGIN)

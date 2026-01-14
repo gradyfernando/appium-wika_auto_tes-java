@@ -24,7 +24,7 @@ public class HakAksesApiTest {
             .given()
             	.log().all()
             	.header("Accept", "application/json")
-            	.baseUri(ApiConfig.BASE_URL)
+            	.baseUri(ApiConfig.BASE_API_URL)
                 .contentType(ContentType.URLENC)
                 .formParams(formParams)
             .post(Route.USER_GET_AKSES)

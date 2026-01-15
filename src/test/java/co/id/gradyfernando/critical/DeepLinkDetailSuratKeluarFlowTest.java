@@ -23,7 +23,7 @@ import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
 import co.id.gradyfernando.utils.SessionInjector;
 
-public class DeepLinkDetailSuratFlowTest extends AndroidBaseTest {
+public class DeepLinkDetailSuratKeluarFlowTest extends AndroidBaseTest {
 
 	private User user;
     private List<Surat> suratList;
@@ -68,7 +68,7 @@ public class DeepLinkDetailSuratFlowTest extends AndroidBaseTest {
 
         // Get Data Surat
         suratList = SuratApiTest.getListSurat(
-            Jenis.MASUK,
+            Jenis.KELUAR,
             user.getToken(), 
             "0", 
             "2", 
@@ -87,7 +87,7 @@ public class DeepLinkDetailSuratFlowTest extends AndroidBaseTest {
         
         HomePage homePage = new HomePage(driver);
         homePage.openProfileMenu();
-        homePage.selectMenuFromAllMenu("Surat Masuk");
+        homePage.selectMenuFromAllMenu("Surat Keluar (ttd basah)");
         
         Thread.sleep(2000);
 
@@ -120,7 +120,7 @@ public class DeepLinkDetailSuratFlowTest extends AndroidBaseTest {
         String suratId = sampleSurat.getIdsurat();
 
         // Scheme url 'weoffice'
-        String webUrl = ApiConfig.BASE_URL + "/surat/detailsurat/jenis/in/of/0/id/" + suratId;
+        String webUrl = ApiConfig.BASE_URL + "/surat/detailsurat/jenis/out/of/0/id/" + suratId;
         System.err.println(webUrl);
         driver.get(webUrl);
         

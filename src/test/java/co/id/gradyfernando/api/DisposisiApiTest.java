@@ -18,7 +18,7 @@ import io.restassured.parsing.Parser;
 
 public class DisposisiApiTest {
      
-	public static List<Disposisi> getListSurat(Jenis jenis, String token, String offset, String limit, String sifat, Map<String, String> additionalFilter) {
+	public static List<Disposisi> getListDisposisi(Jenis jenis, String token, String offset, String limit, String sifat, Map<String, String> additionalFilter) {
 		Map<String, String> formParams = new HashMap<>();
 		formParams.put("token", token);
 		formParams.put("offset", offset);

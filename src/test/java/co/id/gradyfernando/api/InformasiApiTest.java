@@ -19,7 +19,7 @@ import io.restassured.parsing.Parser;
 
 public class InformasiApiTest {
     
-	public static List<Informasi> getListSurat(Jenis jenis, String token, String offset, String limit, String sifat, Map<String, String> additionalFilter) {
+	public static List<Informasi> getListInformasi(Jenis jenis, String token, String offset, String limit, String sifat, Map<String, String> additionalFilter) {
 		Map<String, String> formParams = new HashMap<>();
 		formParams.put("token", token);
 		formParams.put("offset", offset);

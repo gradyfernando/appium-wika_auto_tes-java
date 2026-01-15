@@ -10,20 +10,24 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class DetailDisposisiPage extends AndroidActions {
     
+	@AndroidFindBy(id = "co.id.integra.weoffice:id/tvKodeDisposisi")
+	private WebElement tvKodeDisposisi;
     @AndroidFindBy(id = "co.id.integra.weoffice:id/btnKirimDisposisi")
 	private WebElement disposisiButton;
 	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnKirimInformasi")
 	private WebElement informasiButton;
 
-    public DetailDisposisiPage(AndroidDriver driver, String disposisiId) {
+    public DetailDisposisiPage(AndroidDriver driver) {
         super(driver);
-        setActivity(disposisiId);
-
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     public void setActivity(String disposisiId) {
         driver.get("weoffice://disposisi/detail?id=" + disposisiId);
+    }
+
+    public String getKodeDisposisi() {
+        return tvKodeDisposisi.getText();
     }
 
     public void clickDisposisikan() {

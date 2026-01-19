@@ -15,7 +15,7 @@ import co.id.gradyfernando.pageObjects.android.DaftarInformasiPage;
 import co.id.gradyfernando.pageObjects.android.DetailinformasiPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 
-public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
+public class DeepLinkDetailInformasiKeluarFlowTest extends BaseDeepLinkTest {
 
     private List<Informasi> InformasiList;
     private Informasi sampleInformasi;
@@ -26,7 +26,7 @@ public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
     public void prepare() throws InterruptedException {
         // Get Data Informasi
         InformasiList = InformasiApiTest.getListInformasi(
-            Jenis.MASUK,
+            Jenis.KELUAR,
             user.getToken(), 
             "0", 
             "2", 
@@ -40,12 +40,12 @@ public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
     }
 
     @Test
-    public void test_intent_DetailInformasiMasuk() throws InterruptedException {
+    public void test_intent_DetailInformasiKeluar() throws InterruptedException {
         String nomorInformasi = sampleInformasi.getNosurat();
         
         HomePage homePage = new HomePage(driver);
         homePage.openProfileMenu();
-        homePage.selectMenuFromAllMenu("Informasi Masuk");
+        homePage.selectMenuFromAllMenu("Informasi Keluar");
         
         Thread.sleep(2000);
 
@@ -58,18 +58,18 @@ public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
         Assert.assertEquals(detailInformasiPage.getNomorSurat(), sampleInformasi.getNosurat(), "Nomor Surat Tidak Sesuai");
 
         // Check Title
-        String titlePage = detailInformasiPage.getTitlePage("0");
+        String titlePage = detailInformasiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();
     }
 
     @Test
-    public void test_deeplink_appscheme_DetailInformasiMasuk() throws InterruptedException {
+    public void test_deeplink_appscheme_DetailInformasiKeluar() throws InterruptedException {
         String InformasiId = sampleInformasi.getIdinformasi();
 
         // Scheme app 'weoffice'
-        driver.get("weoffice://informasi/detail?id=" + InformasiId + "&tipe=in");
+        driver.get("weoffice://informasi/detail?id=" + InformasiId + "&tipe=out");
 
         DetailinformasiPage detailInformasiPage = new DetailinformasiPage(driver);
         detailInformasiPage.scrollToText(sampleInformasi.getNosurat());
@@ -77,18 +77,18 @@ public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
         Assert.assertEquals(detailInformasiPage.getNomorSurat(), sampleInformasi.getNosurat(), "Nomor Surat Tidak Sesuai");
 
         // Check Title
-        String titlePage = detailInformasiPage.getTitlePage("0");
+        String titlePage = detailInformasiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();
     }
 
     @Test
-    public void test_deeplink_weburl_DetailInformasiMasuk() throws InterruptedException {
+    public void test_deeplink_weburl_DetailInformasiKeluar() throws InterruptedException {
         String InformasiId = sampleInformasi.getIdinformasi();
 
         // Scheme url 'weoffice'
-        String webUrl = ApiConfig.BASE_URL + "/informasi/detail/" + InformasiId + "/M";
+        String webUrl = ApiConfig.BASE_URL + "/informasi/detail/" + InformasiId + "/K";
         System.err.println(webUrl);
         driver.get(webUrl);
         
@@ -98,7 +98,7 @@ public class DeepLinkDetailInformasiMasukFlowTest extends BaseDeepLinkTest {
         Assert.assertEquals(detailInformasiPage.getNomorSurat(), sampleInformasi.getNosurat(), "Nomor Surat Tidak Sesuai");
 
         // Check Title
-        String titlePage = detailInformasiPage.getTitlePage("0");
+        String titlePage = detailInformasiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();

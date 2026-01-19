@@ -15,8 +15,8 @@ import co.id.gradyfernando.pageObjects.android.DaftarDisposisiPage;
 import co.id.gradyfernando.pageObjects.android.DetailDisposisiPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 
-public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
-
+public class DeepLinkDetailDisposisiKeluarFlowTest extends BaseDeepLinkTest {
+    
     private List<Disposisi> disposisiList;
     private Disposisi sampleDisposisi;
 
@@ -26,7 +26,7 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
     public void prepare() throws InterruptedException {
         // Get Data Disposisi
         disposisiList = DisposisiApiTest.getListDisposisi(
-            Jenis.MASUK,
+            Jenis.KELUAR,
             user.getToken(), 
             "0", 
             "2", 
@@ -39,13 +39,13 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
         sampleDisposisi = disposisiList.get(0);
     }
 
-    @Test
-    public void test_intent_DetailDisposisiMasuk() throws InterruptedException {
+    @Test()
+    public void test_intent_DetailDisposisiKeluar() throws InterruptedException {
         String kodeDisposisi = sampleDisposisi.getKodedisposisi();
         
         HomePage homePage = new HomePage(driver);
         homePage.openProfileMenu();
-        homePage.selectMenuFromAllMenu("Disposisi Masuk");
+        homePage.selectMenuFromAllMenu("Disposisi Keluar");
         
         Thread.sleep(2000);
 
@@ -55,50 +55,50 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
         DetailDisposisiPage detailDisposisiPage = new DetailDisposisiPage(driver);
         detailDisposisiPage.scrollToText(sampleDisposisi.getKodedisposisi());
 
-        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi(), "Disposisi Masuk: Kode Tidak Sesuai");
+        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi());
 
         // Check Title
-        String titlePage = detailDisposisiPage.getTitlePage("0");
+        String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();
     }
 
     @Test
-    public void test_deeplink_appscheme_DetailDisposisiMasuk() throws InterruptedException {
+    public void test_deeplink_appscheme_DetailDisposisiKeluar() throws InterruptedException {
         String disposisiId = sampleDisposisi.getIddisposisi();
 
         // Scheme app 'weoffice'
-        driver.get("weoffice://disposisi/detail?id=" + disposisiId + "&tipe=in");
+        driver.get("weoffice://disposisi/detail?id=" + disposisiId + "&tipe=out");
 
         DetailDisposisiPage detailDisposisiPage = new DetailDisposisiPage(driver);
         detailDisposisiPage.scrollToText(sampleDisposisi.getKodedisposisi());
 
-        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi());
+        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi(), "Kode disposisi tidak sesuai");
 
         // Check Title
-        String titlePage = detailDisposisiPage.getTitlePage("0");
+        String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();
     }
 
     @Test
-    public void test_deeplink_weburl_DetailDisposisiMasuk() throws InterruptedException {
+    public void test_deeplink_weburl_DetailDisposisiKeluar() throws InterruptedException {
         String disposisiId = sampleDisposisi.getIddisposisi();
 
         // Scheme url 'weoffice'
-        String webUrl = ApiConfig.BASE_URL + "/disposisi/detail/" + disposisiId + "/in";
+        String webUrl = ApiConfig.BASE_URL + "/disposisi/detail/" + disposisiId + "/out";
         System.err.println(webUrl);
         driver.get(webUrl);
         
         DetailDisposisiPage detailDisposisiPage = new DetailDisposisiPage(driver);
         detailDisposisiPage.scrollToText(sampleDisposisi.getKodedisposisi());
 
-        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi());
+        Assert.assertEquals(detailDisposisiPage.getKodeDisposisi(), sampleDisposisi.getKodedisposisi(), "Kode Disposisi Tidak Sesuai");
 
         // Check Title
-        String titlePage = detailDisposisiPage.getTitlePage("0");
+        String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
         backButton();

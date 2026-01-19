@@ -1,5 +1,6 @@
 package co.id.gradyfernando.pageObjects.android;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -32,6 +33,15 @@ public class DetailDisposisiPage extends AndroidActions {
 
     public void clickDisposisikan() {
         disposisiButton.click();
+    }
+
+    public String getTitlePage(String tipe) {
+        // if (tipe == "0") {
+        //     return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Disposisi Masuk\"]")).getText();
+        // } else {
+        //     return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Disposisi Keluar\"]")).getText();
+        // }
+        return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Disposisi\"]")).getText();
     }
 
 }

@@ -29,15 +29,15 @@ public class DaftarDisposisiPage extends AndroidActions {
         }
     }
 
-    public void selectItemByNomor(String nomorSurat) {
-        List<WebElement> noSuratLabelElement = driver.findElements(By.id("co.id.integra.weoffice:id/tvNoSurat"));
-        int undanganSize = noSuratLabelElement.size();
+    public void selectItemByKodeDisposisi(String kodeDisposisi) {
+        List<WebElement> kodeDisposisiElement = driver.findElements(By.id("co.id.integra.weoffice:id/tvKodeDisposisi"));
+        int undanganSize = kodeDisposisiElement.size();
 
         for (int i=0; i<undanganSize; i++) {
-            String statusName = noSuratLabelElement.get(i).getText();
+            String statusName = kodeDisposisiElement.get(i).getText();
             
-            if (statusName.toLowerCase().contains(nomorSurat.toLowerCase())) {
-                noSuratLabelElement.get(i).click();
+            if (statusName.toLowerCase().contains(kodeDisposisi.toLowerCase())) {
+                kodeDisposisiElement.get(i).click();
                 break;
             }
         }

@@ -18,10 +18,8 @@ public class DetailDraftPage extends AndroidActions {
 	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnRevisi")
 	private WebElement revisiButton;
 
-    public DetailDraftPage(AndroidDriver driver, String draftId) {
+    public DetailDraftPage(AndroidDriver driver) {
         super(driver);
-        setActivity(draftId);
-
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -29,7 +27,7 @@ public class DetailDraftPage extends AndroidActions {
         driver.get("weoffice://draft/detail?id=" + draftId);
     }
 
-    public String getTitlePage(String tipe) {
+    public String getTitlePage() {
         return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Draft\"]")).getText();
     }
 

@@ -27,7 +27,6 @@ public class HomePage extends AndroidActions {
 
 	public HomePage(AndroidDriver driver) {
 		super(driver);
-		setActivity();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 	

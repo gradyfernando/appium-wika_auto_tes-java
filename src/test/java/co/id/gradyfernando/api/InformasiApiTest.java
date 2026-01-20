@@ -9,7 +9,6 @@ import co.id.gradyfernando.config.Route;
 import co.id.gradyfernando.model.BaseDaftarSurat;
 import co.id.gradyfernando.model.BaseRecords;
 import co.id.gradyfernando.model.BaseResponseModel;
-import co.id.gradyfernando.model.Disposisi;
 import co.id.gradyfernando.model.Informasi;
 import co.id.gradyfernando.model.enumeration.Jenis;
 import io.restassured.RestAssured;

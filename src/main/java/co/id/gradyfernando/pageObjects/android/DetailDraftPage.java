@@ -1,5 +1,6 @@
 package co.id.gradyfernando.pageObjects.android;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -26,6 +27,10 @@ public class DetailDraftPage extends AndroidActions {
 
     public void setActivity(String draftId) {
         driver.get("weoffice://draft/detail?id=" + draftId);
+    }
+
+    public String getTitlePage(String tipe) {
+        return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Draft\"]")).getText();
     }
 
 }

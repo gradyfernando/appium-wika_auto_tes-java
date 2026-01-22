@@ -2,6 +2,7 @@ package co.id.gradyfernando.critical;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;

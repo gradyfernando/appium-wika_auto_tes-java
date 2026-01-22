@@ -14,6 +14,7 @@ import co.id.gradyfernando.model.enumeration.Jenis;
 import co.id.gradyfernando.pageObjects.android.DaftarSuratPage;
 import co.id.gradyfernando.pageObjects.android.DetailSuratPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
+import co.id.gradyfernando.report.ExtentReportListeners;
 
 public class DeepLinkDetailSuratKeluarFlowTest extends BaseDeepLinkTest {
 
@@ -60,6 +61,8 @@ public class DeepLinkDetailSuratKeluarFlowTest extends BaseDeepLinkTest {
         // Check Title
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage);
+
+
         
         backButton();
     }

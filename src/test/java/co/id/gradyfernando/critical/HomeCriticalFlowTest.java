@@ -83,7 +83,7 @@ public class HomeCriticalFlowTest extends AndroidBaseTest {
 
         // Thread.sleep(2000);
 
-		DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver, "1425");
+		DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
         detailUndanganPage.scrollToText("Approve");
 
 		Thread.sleep(2000);

@@ -142,8 +142,8 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDraftPage.getTitlePage();
         Assert.assertEquals(titlePage, "Detail Draft", "Judul tidak sesuai");
 
-        backButton();
-        backButton();
+        pressBackButton();
+        pressBackButton();
     }
 
     
@@ -163,7 +163,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDraftPage.getTitlePage();
         Assert.assertEquals(titlePage, "Detail Draft", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDraft"})
@@ -184,7 +184,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDraftPage.getTitlePage();
         Assert.assertEquals(titlePage, "Detail Draft", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDisposisiKeluar"})
@@ -209,8 +209,8 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-        backButton();
-        backButton();
+        pressBackButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDisposisiKeluar"})
@@ -229,7 +229,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDisposisiKeluar"})
@@ -250,7 +250,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDisposisiMasuk"})
@@ -275,7 +275,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("0");
         Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods={"prepareDisposisiMasuk"})
@@ -295,8 +295,8 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
             String titlePage = detailDisposisiPage.getTitlePage("0");
             Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-            backButton();
-            backButton();
+            pressBackButton();
+            pressBackButton();
         } else {
             throw new SkipException("Tidak ada data dari API: getlistdisposisimasuk");
         }
@@ -321,7 +321,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("0");
         Assert.assertEquals(titlePage, "Detail Disposisi", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganMasuk"})
@@ -347,8 +347,8 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("0");
         Assert.assertEquals(titlePage, "Detail Undangan Masuk", "Judul tidak sesuai");
 
-        backButton();
-        backButton();
+        pressBackButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganMasuk"})
@@ -367,7 +367,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("0");
         Assert.assertEquals(titlePage, "Detail Undangan Masuk", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganMasuk"})
@@ -388,7 +388,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("0");
         Assert.assertEquals(titlePage, "Detail Undangan Masuk", "Judul tidak sesuai");
         
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganKeluar"})
@@ -414,8 +414,8 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Undangan Keluar", "Judul tidak sesuai");
 
-        backButton();
-        backButton();
+        pressBackButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganKeluar"})
@@ -434,7 +434,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Undangan Keluar", "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(dependsOnMethods = {"prepareUndanganKeluar"})
@@ -455,7 +455,7 @@ public class DeepLinkTestFlow extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, "Detail Undangan Keluar", "Judul tidak sesuai");
         
-        backButton();
+        pressBackButton();
     }
 
 }

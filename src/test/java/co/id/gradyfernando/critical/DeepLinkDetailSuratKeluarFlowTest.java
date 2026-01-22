@@ -64,7 +64,7 @@ public class DeepLinkDetailSuratKeluarFlowTest extends BaseDeepLinkTest {
 
 
         
-        backButton();
+        pressBackButton();
     }
 
     @Test
@@ -83,7 +83,7 @@ public class DeepLinkDetailSuratKeluarFlowTest extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage);
 
-        backButton();
+        pressBackButton();
     }
 
     @Test
@@ -104,7 +104,7 @@ public class DeepLinkDetailSuratKeluarFlowTest extends BaseDeepLinkTest {
         String titlePage = detailSuratPage.getTitlePage("1");
         Assert.assertEquals(titlePage, _detailTitlePage);
 
-        backButton();
+        pressBackButton();
     }
 
 }

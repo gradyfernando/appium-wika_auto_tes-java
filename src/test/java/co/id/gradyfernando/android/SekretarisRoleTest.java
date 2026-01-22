@@ -61,7 +61,7 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         ExtentLogger.info("Detail Undangan: " + detailUndanganPage.getNomorSurat());
         detailUndanganPage.checkSekretarisButton();
 
-        backButton();
+        pressBackButton();
     }
 
     @Test()
@@ -78,7 +78,7 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
         detailUndanganPage.checkNoSekretarisButton();
 
-        backButton();
+        pressBackButton();
     }
 
     @Test(groups = {"transaksi", "searchuser"})

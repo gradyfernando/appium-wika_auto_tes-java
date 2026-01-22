@@ -46,7 +46,7 @@ public class AndroidBaseTest extends AppiumUtils {
 		// loginPage = new LoginPage(driver);
 	}
 
-	public void backButton() {
+	public void pressBackButton() {
 		driver.pressKey(new KeyEvent().withKey(AndroidKey.BACK));
 	}
 

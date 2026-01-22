@@ -62,7 +62,7 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("0");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test
@@ -81,7 +81,7 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("0");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
     @Test
@@ -102,7 +102,7 @@ public class DeepLinkDetailDisposisiMasukFlowTest extends BaseDeepLinkTest {
         String titlePage = detailDisposisiPage.getTitlePage("0");
         Assert.assertEquals(titlePage, _detailTitlePage, "Judul tidak sesuai");
 
-        backButton();
+        pressBackButton();
     }
 
 }

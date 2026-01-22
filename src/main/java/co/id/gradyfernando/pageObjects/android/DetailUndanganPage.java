@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 import co.id.gradyfernando.utils.AndroidActions;
 import io.appium.java_client.android.AndroidDriver;
@@ -22,14 +24,20 @@ public class DetailUndanganPage extends AndroidActions {
 	private WebElement informasiButton;
 	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnApprove")
 	private WebElement approveButton;
+	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnTolak")
+	private WebElement tolakButton;
+	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnDiarahkan")
+	private WebElement diarahkanButton;
+	@AndroidFindBy(id = "co.id.integra.weoffice:id/btnPertimbangan")
+	private WebElement pertimbanganButton;
 
     public DetailUndanganPage(AndroidDriver driver) {
         super(driver);
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-    public void setActivity(String undanganId) {
-        driver.get("weoffice://undangan/detail?id=" + undanganId);
+    public void setActivity(String undanganId, String tipe) {
+        driver.get("weoffice://undangan/detail?id=" + undanganId + "&tipe=" + tipe);
     }
 
     public void openPageByDeepLinkWebUrl(String url) {
@@ -59,9 +67,40 @@ public class DetailUndanganPage extends AndroidActions {
             return driver.findElement(By.xpath("//android.widget.TextView[@text=\"Detail Undangan Keluar\"]")).getText();
         }
     }
+
+    public void clickInformasikan() {
+        scrollToText("Informasikan");
+        informasiButton.click();
+    }
    
     public void clickApprove() {
         approveButton.click();
     }
+
+    public void checkSekretarisButton() {
+        scrollToText("Approve");
+        Assert.assertTrue(approveButton.isDisplayed());
+
+        scrollToText("Tolak");
+        Assert.assertTrue(tolakButton.isDisplayed());
+
+        scrollToText("Diarahkan");
+        Assert.assertTrue(diarahkanButton.isDisplayed());
+
+        scrollToText("Pertimbangan");
+        Assert.assertTrue(pertimbanganButton.isDisplayed());
+    }
+
+    public void checkNoSekretarisButton() {
+        Assert.assertThrows(NoSuchElementException.class, () -> {
+            scrollToText("Pertimbangan");
+
+            approveButton.isDisplayed();
+            tolakButton.isDisplayed();
+            diarahkanButton.isDisplayed();
+            pertimbanganButton.isDisplayed();
+        });
+    }
+    
 
 }

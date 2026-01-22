@@ -65,6 +65,54 @@ public class SuratApiTest {
         List<Surat> suratList = response.getData().getRecords().getData();
         return suratList;
 	}
+
+    public static List<Surat> getListUndangan(Jenis jenis, String token, String offset, String limit, String sifat, Map<String, String> additionalFilter) {
+		Map<String, String> formParams = new HashMap<>();
+		formParams.put("token", token);
+		formParams.put("offset", offset);
+		formParams.put("limit", limit);
+		formParams.put("sifat", sifat);
+
+        if (additionalFilter.size() == 0) {
+            formParams.put("tampilkepada", "0");
+            formParams.put("tampiltembusan", "0");
+        } else {
+            for (Map.Entry<String, String> entry: additionalFilter.entrySet()) {
+                formParams.put(entry.getKey(), entry.getValue());
+            }
+        }
+
+        String apiUrl = "";
+        switch (jenis) {
+            case MASUK:
+                apiUrl = Route.GET_LIST_SURAT_MASUK;
+                break;
+            case KELUAR:
+                apiUrl = Route.GET_LIST_SURAT_KELUAR;
+                break;
+            default:
+                break;
+        }
+		
+        BaseResponseModel<BaseRecords<BaseDaftarSurat<Surat>>> response = RestAssured
+            .given()
+            	.log().all()
+            	.header("Accept", "application/json")
+            	.baseUri(ApiConfig.BASE_API_URL)
+                .contentType(ContentType.URLENC)
+                .formParams(formParams)
+            .post(apiUrl)
+            .then()
+            	.log().all()
+            	.assertThat()
+                .statusCode(200)
+                .using().defaultParser(Parser.JSON)
+                .extract()
+                .as(new TypeRef<BaseResponseModel<BaseRecords<BaseDaftarSurat<Surat>>>>() {});
+        
+        List<Surat> suratList = response.getData().getRecords().getData();
+        return suratList;
+	}
     
 }
 

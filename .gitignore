@@ -32,3 +32,5 @@ test-output/
 
 # App Test (Should generated from project repository)
 src/test/java/resources/WeOffice.apk
+/.apt_generated/
+/.apt_generated_tests/

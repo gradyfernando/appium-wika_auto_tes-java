@@ -33,6 +33,10 @@ public class ExtentReportListeners extends AppiumUtils implements ITestListener 
     	test.get().log(Status.PASS, "Test Passed");
     }
 
+    public void insertLog(String log) {
+        test.get().log(Status.INFO, log);
+    }
+
     @Override
     public void onTestFailure(ITestResult result) {
     	test.get().fail("Test Fail:" + result.getThrowable());
@@ -59,6 +63,10 @@ public class ExtentReportListeners extends AppiumUtils implements ITestListener 
     @Override
     public void onFinish(ITestContext context) {
         extent.flush();
+    }
+
+    public static ExtentTest getTest() {
+        return test.get();
     }
     
 }

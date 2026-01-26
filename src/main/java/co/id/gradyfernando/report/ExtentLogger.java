@@ -3,15 +3,27 @@ package co.id.gradyfernando.report;
 public class ExtentLogger {
 
     public static void info(String message) {
-        ExtentReportListeners.getTest().info(message);
+        try {
+            ExtentReportListeners.getTest().info(message);
+        } catch (NullPointerException e) {
+            System.out.println("Log info failed. Test Listener object is null");
+        }
     }
 
     public static void pass(String message) {
-        ExtentReportListeners.getTest().pass(message);
+        try {
+            ExtentReportListeners.getTest().pass(message);
+        } catch (NullPointerException e) {
+            System.out.println("Log info failed. Test Listener object is null");
+        }
     }
 
     public static void fail(String message) {
-        ExtentReportListeners.getTest().fail(message);
+        try {
+            ExtentReportListeners.getTest().fail(message);
+        } catch (NullPointerException e) {
+            System.out.println("Log info failed. Test Listener object is null");
+        }
     }
     
 }

@@ -128,16 +128,6 @@ public class HomePage extends AndroidActions {
 				System.out.println("recheck text caption elements: " + captionElements.size());
 			}
 
-			// do {
-			// 	System.out.println("text size in "+captionElements.get(0).getText()+" : " + captionElements + "");
-
-				// scrollDown();
-			// 	cardViewElement = driver.findElement(AppiumBy.xpath(xPath));
-			// 	System.out.println("xPath loop: " + xPath);
-			// 	captionElements = cardViewElement.findElements(By.className("android.widget.TextView"));
-			// 	System.out.println("text caption elements: " + captionElements.size());
-			// } while ((captionElements.size() < 9));
-
 			if (captionText.equals(section)) {
 				System.out.println("captionSelected: " + captionElements.get(0).getText());
 				selectedCardViewIndex = xPathIndex;
@@ -164,30 +154,6 @@ public class HomePage extends AndroidActions {
 			}
 		}
 
-		System.out.println("selectedIndex: " + selectedCardViewIndex);
-
-		// WebElement card = driver.findElement(
-		// 	By.xpath("(//androidx.cardview.widget.CardView[@resource-id=\"co.id.integra.weoffice:id/cvMenuContainer\"])["+manualSequence+"]")
-		// );
-
-		// WebElement rvLink = driver.findElement(By.xpath("(//androidx.recyclerview.widget.RecyclerView[@resource-id=\"co.id.integra.weoffice:id/rvLink\"])["+manualSequence+"]"));
-		// List<WebElement> itemsLink = rvLink.findElements(By.className("android.widget.LinearLayout"));
-
-		// for (WebElement linkElement : itemsLink) {
-		// 	List<WebElement> textElements = linkElement.findElements(By.className("android.widget.TextView"));
-		// 	WebElement titleText = textElements.get(0);
-		// 	WebElement numberText = textElements.get(1);
-		// 	var notificationCount = numberText.getText();
-
-		// 	System.out.println("titleText:" + titleText.getText());
-		// 	if (titleText.getText().equals(item)) {
-		// 		titleText.click();
-
-		// 		Thread.sleep(2000);
-		// 		return notificationCount;
-		// 	}
-		// }
-
 		return null;
 	}
 
@@ -195,8 +161,41 @@ public class HomePage extends AndroidActions {
 		return tvNamaUser.getText();
 	}
 
-	public String getNotificationNumber() {
-		String input = "Notifikasi, 20 new notifications";
+	// Get child count by getting all listed notification text (duplicate aren't counted)
+	public int getChildCount() {
+		Set<String> uniqueItems = new HashSet<>();
+		boolean canScroll = true;
+		String lastSeen = "";
+
+		while (canScroll) {
+			List<WebElement> items =
+				driver.findElements(AppiumBy.id("co.id.integra.weoffice:id/tvNotification"));
+
+			for (WebElement element : items) {
+				uniqueItems.add(element.getText());
+			}
+
+			String currentLast =
+				items.get(items.size() - 1).getText();
+
+			if (currentLast.equals(lastSeen)) {
+				canScroll = false; // end reached
+			} else {
+				lastSeen = currentLast;
+
+				driver.findElement(AppiumBy.androidUIAutomator(
+					"new UiScrollable(new UiSelector().scrollable(true)).scrollForward()"
+				));
+			}
+		}
+
+		return uniqueItems.size();
+	}
+
+	// Get badge number from bottom navigation bar
+	public String getNotificationBadgeNumber() {
+		WebElement bottomNavBar = driver.findElement(By.id("co.id.integra.weoffice:id/navigation_notifications"));
+		String input = bottomNavBar.getAttribute("content-desc");
 
 		// Find the index of the first space
         int firstSpaceIndex = input.indexOf(' ');

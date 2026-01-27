@@ -27,8 +27,10 @@ public class DashboardTest extends AndroidBaseTest {
     public void loginSekretaris() throws InterruptedException {
         // Get data first
 		user = LoginApiTest.login(
-			"TK171561",
-			"TK171561",
+			// "TK171561",
+			// "TK171561",
+            "ET133126",
+            "ET133126",
 			"A.1.D", 
 			"2.2.0"
 		);
@@ -171,11 +173,14 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(todayAgendaCount), daftarDraftPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    // @Test
-    // public void test_notificationBadge() {
-    //     homePage.openNotificationMenu();
-    //     var notifCount = homePage.countNotification();
-    //     System.out.println("notification count: " + notifCount);
-    // }
+    @Test
+    public void test_notificationBadge() throws InterruptedException {
+        Thread.sleep(500);
+        homePage.openNotificationMenu();
+        var badgeCount = homePage.getNotificationBadgeNumber();
+        var childCount = homePage.getChildCount();
+
+        Assert.assertEquals(badgeCount, childCount, "Jumlah badge dan jumlah notification tidak sesuai");
+    }
 
 }

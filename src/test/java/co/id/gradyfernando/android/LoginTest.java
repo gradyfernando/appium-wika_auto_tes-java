@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -29,6 +31,27 @@ public class LoginTest extends AndroidBaseTest {
     public void Test_Login_Success(HashMap<String, String> input) throws InterruptedException {
         loginPage.setUsernamePassword(input.get("username"), input.get("password"));
         loginPage.clickLogin();
+    }
+
+    @Test(groups = {"smoke"}) 
+    public void test_loginThenLogout() throws InterruptedException {
+        loginPage.setUsernamePassword("TK171561", "TK171561");
+        loginPage.clickLogin();
+
+        Thread.sleep(2000);
+
+        HakAksesPage hakAksesPage = new HakAksesPage(driver);
+        hakAksesPage.clickLogout();
+    }
+
+    @Test
+    public void test_loginFailedShowMessage() throws InterruptedException {
+        loginPage.setUsernamePassword("asdf", "fdsa");
+        loginPage.clickLogin();
+
+        Thread.sleep(2000);
+
+        Assert.assertNotNull(driver.findElement(By.id("co.id.integra.weoffice:id/tvTitleHint")));
     }
 
     @Test

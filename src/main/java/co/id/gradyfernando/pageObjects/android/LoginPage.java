@@ -1,6 +1,8 @@
 package co.id.gradyfernando.pageObjects.android;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -42,6 +44,16 @@ public class LoginPage extends AndroidActions {
 	
 	public void clickLogin() {
 		loginButton.click();
+	}
+
+	public String isHintDisplayed() {
+		try {
+			WebElement element = driver.findElement(By.id("co.id.integra.weoffice:id/tvTitleHint"));
+			return element.getText();
+		} catch (NoSuchElementException e) {
+			return "";
+		}
+		
 	}
 
 //	public void setNameField(String name) {

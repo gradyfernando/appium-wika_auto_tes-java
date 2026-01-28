@@ -58,7 +58,7 @@ public class DashboardTest extends AndroidBaseTest {
     //
     // Belum Dibaca
     //
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unRead_Surat() throws InterruptedException {
         var unreadSuratCount = homePage.selectItemDashboard("Belum Dibaca", "Surat");
         ExtentLogger.info("Section: Belum Dibaca - Surat");
@@ -68,7 +68,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadSuratCount), daftarSuratPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unRead_Undangan() throws InterruptedException {
         var unreadUndanganCount = homePage.selectItemDashboard("Belum Dibaca", "Undangan");
 
@@ -77,7 +77,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadUndanganCount), daftarUndanganPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unRead_Disposisi() throws InterruptedException {
         var unreadDisposisiCount = homePage.selectItemDashboard("Belum Dibaca", "Disposisi");
 
@@ -86,7 +86,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadDisposisiCount), daftarDisposisiPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unRead_Informasi() throws InterruptedException {
         var unreadInformasiCount = homePage.selectItemDashboard("Belum Dibaca", "Infomasi");
 
@@ -99,7 +99,7 @@ public class DashboardTest extends AndroidBaseTest {
     // Belum ditindaklanjuti
     //
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unprocessed_Surat() throws InterruptedException {
         var unreadSuratCount = homePage.selectItemDashboard("Belum Ditindaklanjuti", "Surat");
 
@@ -108,7 +108,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadSuratCount), daftarSuratPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unprocessed_Undangan() throws InterruptedException {
         var unreadUndanganCount = homePage.selectItemDashboard("Belum Ditindaklanjuti", "Undangan");
 
@@ -117,7 +117,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadUndanganCount), daftarUndanganPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unprocessed_Disposisi() throws InterruptedException {
         var unreadDisposisiCount = homePage.selectItemDashboard("Belum Ditindaklanjuti", "Disposisi");
 
@@ -126,7 +126,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unreadDisposisiCount), daftarDisposisiPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_unprocessed_Informasi() throws InterruptedException {
         var unreadInformasiCount = homePage.selectItemDashboard("Belum Ditindaklanjuti", "Informasi");
 
@@ -138,7 +138,7 @@ public class DashboardTest extends AndroidBaseTest {
     // 
     // Proses & Agenda
     //
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_ProsesAgenda_Draft() throws InterruptedException {
         var unProcessedCount = homePage.selectItemDashboard("Proses & Agenda", "Draft (Butuh Proses)");
 
@@ -147,7 +147,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unProcessedCount), daftarDraftPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_ProsesAgenda_Surat() throws InterruptedException {
         var unsentCount = homePage.selectItemDashboard("Proses & Agenda", "Surat (Belum Dikirim)");
 
@@ -156,7 +156,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unsentCount), daftarSuratPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_ProsesAgenda_Undangan() throws InterruptedException {
         var unsentCount = homePage.selectItemDashboard("Proses & Agenda", "Undangan (Belum Dikirim)");
 
@@ -165,7 +165,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(unsentCount), daftarUndanganPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_numberNotification_ProsesAgenda_Agenda() throws InterruptedException {
         var todayAgendaCount = homePage.selectItemDashboard("Proses & Agenda", "Agenda (Hari ini)");
 
@@ -173,7 +173,7 @@ public class DashboardTest extends AndroidBaseTest {
         Assert.assertEquals(Integer.parseInt(todayAgendaCount), daftarDraftPage.countData(), "Jumlah notifikasi tidak sesuai");
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void test_notificationBadge() throws InterruptedException {
         Thread.sleep(500);
         homePage.openNotificationMenu();

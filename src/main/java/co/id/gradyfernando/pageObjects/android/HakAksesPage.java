@@ -26,7 +26,6 @@ public class HakAksesPage extends AndroidActions {
 
     public HakAksesPage(AndroidDriver driver) {
         super(driver);
-        setActivity();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 

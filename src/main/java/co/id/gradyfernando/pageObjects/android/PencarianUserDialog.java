@@ -74,7 +74,7 @@ public class PencarianUserDialog extends AndroidActions{
                 selectedUser.add(namaElement.getText());
                 parentElements.get(i).click();
 
-                driver.findElement(By.className("user"));
+                Thread.sleep(500);
                 break;
             }
         }

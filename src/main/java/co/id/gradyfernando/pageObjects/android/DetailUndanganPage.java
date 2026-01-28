@@ -72,8 +72,19 @@ public class DetailUndanganPage extends AndroidActions {
         scrollToText("Informasikan");
         informasiButton.click();
     }
+
+    public void clickPertimbangkan() {
+        scrollToText("Pertimbangan");
+        pertimbanganButton.click();
+    }
+
+    public void clickDiarahkan() {
+        scrollToText("Diarahkan");
+        diarahkanButton.click();
+    }
    
     public void clickApprove() {
+        scrollToText("Approve");
         approveButton.click();
     }
 

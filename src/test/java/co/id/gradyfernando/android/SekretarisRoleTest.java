@@ -1,19 +1,18 @@
 package co.id.gradyfernando.android;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import co.id.gradyfernando.api.LoginApiTest;
 import co.id.gradyfernando.model.User;
+import co.id.gradyfernando.pageObjects.android.ArahkanSuratDialog;
 import co.id.gradyfernando.pageObjects.android.DaftarUndanganPage;
 import co.id.gradyfernando.pageObjects.android.DetailUndanganPage;
 import co.id.gradyfernando.pageObjects.android.HakAksesPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.pageObjects.android.KirimInformasikanPage;
 import co.id.gradyfernando.pageObjects.android.PencarianUserDialog;
+import co.id.gradyfernando.pageObjects.android.PertimbanganSuratDialog;
 import co.id.gradyfernando.pageObjects.android.PilihUserPage;
 import co.id.gradyfernando.report.ExtentLogger;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
@@ -32,8 +31,6 @@ public class SekretarisRoleTest extends AndroidBaseTest {
 			"A.1.D", 
 			"2.2.0"
 		);
-
-        ExtentLogger.info("Login: TK171561");
 		
 		// Set Token
 		SessionInjector.injectToken(driver, user.getToken());
@@ -41,12 +38,13 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         Thread.sleep(2000);
 
         HakAksesPage hakAksesPage = new HakAksesPage(driver);
+        hakAksesPage.setActivity();
         hakAksesPage.setRole("sekretaris");
 
         Thread.sleep(2000);
     }
 
-    @Test()
+    @Test(groups = {"smoke"})
     public void test_checkAvailableButton() throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         homePage.setActivity();
@@ -58,13 +56,10 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         daftarUndanganPage.selectItemWithStatus("butuh approval");
 
         DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
-        ExtentLogger.info("Detail Undangan: " + detailUndanganPage.getNomorSurat());
         detailUndanganPage.checkSekretarisButton();
-
-        pressBackButton();
     }
 
-    @Test()
+    @Test(groups = {"smoke"})
     public void test_checkUnavailableButton() throws InterruptedException {
         HomePage homePage = new HomePage(driver);
         homePage.setActivity();
@@ -77,12 +72,69 @@ public class SekretarisRoleTest extends AndroidBaseTest {
 
         DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
         detailUndanganPage.checkNoSekretarisButton();
+    }
 
-        pressBackButton();
+    @Test(groups = {"transaksi", "sekretaris"})
+    public void test_pertimbangkanSurat() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        homePage.setActivity();
+        Thread.sleep(1000);
+        homePage.openProfileMenu();
+        homePage.selectMenuFromAllMenu("Undangan Masuk");
+
+        DaftarUndanganPage daftarUndanganPage = new DaftarUndanganPage(driver);
+        daftarUndanganPage.selectItemWithStatus("butuh approval");
+
+        DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
+        detailUndanganPage.clickPertimbangkan();
+
+        PertimbanganSuratDialog pertimbanganSuratDialog = new PertimbanganSuratDialog(driver);
+        pertimbanganSuratDialog.clickSearchUserJabatan();
+
+        PencarianUserDialog pencarianUserDialog = new PencarianUserDialog(driver);
+        pencarianUserDialog.searchUser("AGUNG BUDI WASKITO");
+        
+        Thread.sleep(500);
+        pertimbanganSuratDialog.clickKirim();
+    }
+
+    @Test(groups = {"transaksi", "sekretaris", "searchuser"})
+    public void test_diarahkan() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        homePage.setActivity();
+        Thread.sleep(1000);
+        homePage.openProfileMenu();
+        homePage.selectMenuFromAllMenu("Undangan Masuk");
+
+        DaftarUndanganPage daftarUndanganPage = new DaftarUndanganPage(driver);
+        daftarUndanganPage.selectItemWithStatus("butuh approval");
+
+        DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
+        detailUndanganPage.clickDiarahkan();
+
+        ArahkanSuratDialog arahkanSuratDialog = new ArahkanSuratDialog(driver);
+        arahkanSuratDialog.clickSearchJabatan();
+
+        PencarianUserDialog pencarianUserDialog = new PencarianUserDialog(driver);
+        pencarianUserDialog.searchUser("AGUNG BUDI WASKITO");
+
+        arahkanSuratDialog.setKeterangan("Testing Automaton");
+        
+        Thread.sleep(500);
+        arahkanSuratDialog.clickArahkan();
     }
 
     @Test(groups = {"transaksi", "searchuser"})
     public void test_informasikan_UndanganMasuk() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        homePage.setActivity();
+        Thread.sleep(1000);
+        homePage.openProfileMenu();
+        homePage.selectMenuFromAllMenu("Undangan Masuk");
+
+        DaftarUndanganPage daftarUndanganPage = new DaftarUndanganPage(driver);
+        daftarUndanganPage.selectItemWithStatus("butuh approval");
+
         DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
         detailUndanganPage.clickInformasikan();
 
@@ -102,7 +154,6 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         
         kirimInformasikanPage.inputCatatan("Uji coba otomatis");
         kirimInformasikanPage.clickLanjut();
-
         
     }
 

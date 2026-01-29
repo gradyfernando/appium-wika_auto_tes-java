@@ -1,23 +1,14 @@
 package co.id.gradyfernando.android;
 
-import java.util.List;
-import java.util.function.Consumer;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import co.id.gradyfernando.api.HakAksesApiTest;
-import co.id.gradyfernando.api.LoginApiTest;
-import co.id.gradyfernando.model.Akses;
-import co.id.gradyfernando.model.User;
 import co.id.gradyfernando.pageObjects.android.ArahkanSuratDialog;
 import co.id.gradyfernando.pageObjects.android.DaftarUndanganPage;
 import co.id.gradyfernando.pageObjects.android.DetailUndanganPage;
-import co.id.gradyfernando.pageObjects.android.HakAksesPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.pageObjects.android.KirimInformasikanPage;
-import co.id.gradyfernando.pageObjects.android.LoginPage;
 import co.id.gradyfernando.pageObjects.android.PencarianUserDialog;
 import co.id.gradyfernando.pageObjects.android.PertimbanganSuratDialog;
 import co.id.gradyfernando.pageObjects.android.PilihUserPage;
@@ -26,48 +17,14 @@ import co.id.gradyfernando.testUtils.AndroidBaseTest;
 
 public class SekretarisRoleTest extends AndroidBaseTest {
 
-    private User user;
-    private boolean isSelectedRoleExist = false;
-
     @BeforeClass
-    public void loginSekretaris() throws InterruptedException {
+    public void login() throws InterruptedException {
         // Data to input
+        var username = "TK171561";
+        var password = "TK171561";
 		var selectedRole = "sekretaris";
 
-        // Get data first
-		user = LoginApiTest.login(
-			"TK171561",
-			"TK171561",
-			"A.1.D", 
-			"2.2.0"
-		);
-		
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.injectSession(user);
-
-        // Set role
-        List<Akses> aksesList = HakAksesApiTest.getAkses(user.getToken());
-		HakAksesPage hakAksesPage = new HakAksesPage(driver);
-        hakAksesPage.setActivity();
-
-		aksesList.forEach(new Consumer<Akses>(){
-            @Override
-            public void accept(Akses akses) {
-				if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
-					isSelectedRoleExist = true;
-
-                    HakAksesApiTest.setAkses(user, akses);
-                    hakAksesPage.injectSession(akses);
-                    
-                    hakAksesPage.setRole(selectedRole);
-				}
-            }
-        });
-
-		// Set Role
-		Assert.assertTrue(isSelectedRoleExist);
-
-        Thread.sleep(1000);
+        injectLoginAndRole(username, password, selectedRole);
     }
 
     @Test(groups = {"smoke"})

@@ -5,44 +5,26 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import co.id.gradyfernando.api.LoginApiTest;
-import co.id.gradyfernando.model.User;
 import co.id.gradyfernando.pageObjects.android.DaftarDisposisiPage;
 import co.id.gradyfernando.pageObjects.android.DaftarDraftPage;
 import co.id.gradyfernando.pageObjects.android.DaftarInformasiPage;
 import co.id.gradyfernando.pageObjects.android.DaftarSuratPage;
 import co.id.gradyfernando.pageObjects.android.DaftarUndanganPage;
-import co.id.gradyfernando.pageObjects.android.HakAksesPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.report.ExtentLogger;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
-import co.id.gradyfernando.utils.SessionInjector;
 
 public class DashboardTest extends AndroidBaseTest {
     
-    private User user;
     private HomePage homePage;
     
     @BeforeClass
     public void login() throws InterruptedException {
-        // Get data first
-		user = LoginApiTest.login(
-			"TK171561",
-			"TK171561",
-			"A.1.D", 
-			"2.2.0"
-		);
-		
-		// Set Token
-		SessionInjector.injectToken(driver, user.getToken());
+        var username = "TK171561";
+        var password = "TK171561";
+		var selectedRole = "sekretaris";
 
-        Thread.sleep(2000);
-
-        HakAksesPage hakAksesPage = new HakAksesPage(driver);
-        hakAksesPage.setActivity();
-        hakAksesPage.setRole("sekretaris");
-
-        Thread.sleep(2000);
+        injectLoginAndRole(username, password, selectedRole);
 
         homePage = new HomePage(driver);
     }

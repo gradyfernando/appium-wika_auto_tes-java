@@ -1,5 +1,6 @@
 package co.id.gradyfernando.testUtils;
 
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -7,8 +8,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
 
+import co.id.gradyfernando.api.HakAksesApiTest;
+import co.id.gradyfernando.api.LoginApiTest;
+import co.id.gradyfernando.model.Akses;
+import co.id.gradyfernando.model.User;
+import co.id.gradyfernando.pageObjects.android.HakAksesPage;
+import co.id.gradyfernando.pageObjects.android.LoginPage;
 import co.id.gradyfernando.utils.AppiumUtils;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
@@ -20,7 +29,8 @@ public class AndroidBaseTest extends AppiumUtils {
 	
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
-	// public LoginPage loginPage;
+	public User user;
+	public boolean isSelectedRoleExist = false;
 	
 	@BeforeClass(alwaysRun = true)
 	public void startAppiumServer() throws URISyntaxException, IOException {
@@ -44,6 +54,43 @@ public class AndroidBaseTest extends AppiumUtils {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		
 		// loginPage = new LoginPage(driver);
+	}
+
+	public void injectLoginAndRole(String username, String password, String selectedRole) throws InterruptedException {
+		// Get data first
+		user = LoginApiTest.login(
+			username,
+			password,
+			"A.1.D", 
+			"2.2.0"
+		);
+		
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.injectSession(user);
+
+        // Set role
+        List<Akses> aksesList = HakAksesApiTest.getAkses(user.getToken());
+		HakAksesPage hakAksesPage = new HakAksesPage(driver);
+        hakAksesPage.setActivity();
+
+		aksesList.forEach(new Consumer<Akses>(){
+            @Override
+            public void accept(Akses akses) {
+				if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
+					isSelectedRoleExist = true;
+
+                    HakAksesApiTest.setAkses(user, akses);
+                    hakAksesPage.injectSession(akses);
+                    
+                    hakAksesPage.setRole(selectedRole);
+				}
+            }
+        });
+
+		// Set Role
+		Assert.assertTrue(isSelectedRoleExist);
+
+        Thread.sleep(1000);
 	}
 
 	public void pressBackButton() {

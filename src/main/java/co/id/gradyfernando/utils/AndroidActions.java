@@ -2,7 +2,10 @@ package co.id.gradyfernando.utils;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -149,6 +152,36 @@ public class AndroidActions extends AppiumUtils {
 									"direction", direction,
 									"percent", 0.2
 								));
+	}
+
+	public int getChildCount(By elementBy) {
+		Set<String> uniqueItems = new HashSet<>();
+		boolean canScroll = true;
+		String lastSeen = "";
+
+		while (canScroll) {
+			List<WebElement> items =
+				driver.findElements(elementBy);
+
+			for (WebElement element : items) {
+				uniqueItems.add(element.getText());
+			}
+
+			String currentLast =
+				items.get(items.size() - 1).getText();
+
+			if (currentLast.equals(lastSeen)) {
+				canScroll = false; // end reached
+			} else {
+				lastSeen = currentLast;
+
+				driver.findElement(AppiumBy.androidUIAutomator(
+					"new UiScrollable(new UiSelector().scrollable(true)).scrollForward()"
+				));
+			}
+		}
+
+		return uniqueItems.size();
 	}
 	
 }

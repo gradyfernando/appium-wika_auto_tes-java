@@ -161,35 +161,8 @@ public class HomePage extends AndroidActions {
 		return tvNamaUser.getText();
 	}
 
-	// Get child count by getting all listed notification text (duplicate aren't counted)
-	public int getChildCount() {
-		Set<String> uniqueItems = new HashSet<>();
-		boolean canScroll = true;
-		String lastSeen = "";
-
-		while (canScroll) {
-			List<WebElement> items =
-				driver.findElements(AppiumBy.id("co.id.integra.weoffice:id/tvNotification"));
-
-			for (WebElement element : items) {
-				uniqueItems.add(element.getText());
-			}
-
-			String currentLast =
-				items.get(items.size() - 1).getText();
-
-			if (currentLast.equals(lastSeen)) {
-				canScroll = false; // end reached
-			} else {
-				lastSeen = currentLast;
-
-				driver.findElement(AppiumBy.androidUIAutomator(
-					"new UiScrollable(new UiSelector().scrollable(true)).scrollForward()"
-				));
-			}
-		}
-
-		return uniqueItems.size();
+	public int getNotificationListChild() {
+		return getChildCount(AppiumBy.id("co.id.integra.weoffice:id/tvNotification"));
 	}
 
 	// Get badge number from bottom navigation bar

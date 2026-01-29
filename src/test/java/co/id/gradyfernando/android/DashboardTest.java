@@ -24,13 +24,11 @@ public class DashboardTest extends AndroidBaseTest {
     private HomePage homePage;
     
     @BeforeClass
-    public void loginSekretaris() throws InterruptedException {
+    public void login() throws InterruptedException {
         // Get data first
 		user = LoginApiTest.login(
-			// "TK171561",
-			// "TK171561",
-            "ET133126",
-            "ET133126",
+			"TK171561",
+			"TK171561",
 			"A.1.D", 
 			"2.2.0"
 		);
@@ -178,7 +176,7 @@ public class DashboardTest extends AndroidBaseTest {
         Thread.sleep(500);
         homePage.openNotificationMenu();
         var badgeCount = homePage.getNotificationBadgeNumber();
-        var childCount = homePage.getChildCount();
+        var childCount = homePage.getNotificationListChild();
 
         Assert.assertEquals(badgeCount, childCount, "Jumlah badge dan jumlah notification tidak sesuai");
     }

@@ -18,6 +18,14 @@ public class ExtentLogger {
         }
     }
 
+    public static void skip(String message) {
+        try {
+            ExtentReportListeners.getTest().skip(message);
+        } catch (NullPointerException e) {
+            System.out.println("Log info failed. Test Listener object is null");
+        }
+    }
+
     public static void fail(String message) {
         try {
             ExtentReportListeners.getTest().fail(message);

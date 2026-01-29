@@ -1,5 +1,6 @@
 package co.id.gradyfernando.pageObjects.android;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import com.google.common.collect.ImmutableMap;
 
 import co.id.gradyfernando.model.Akses;
 import co.id.gradyfernando.utils.AndroidActions;
+import co.id.gradyfernando.utils.SessionInjector;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -51,6 +53,19 @@ public class HakAksesPage extends AndroidActions {
         
     }
 
+    public void injectSession(Akses akses) {
+		HashMap<String, String> roleData = new HashMap<>();
+		roleData.put("action", "setrole");
+		roleData.put("idrole", "\"" + akses.getIdrole() + "\"");
+		roleData.put("idjabatan", "\"" + akses.getIdjabatan() + "\"");
+		roleData.put("idunit", "\"" + akses.getIdunit() + "\"");
+		roleData.put("namarole", "\"" + akses.getNamarole() + "\"");
+		roleData.put("namajabatan", "\"" + akses.getNamajabatan() + "\"");
+		roleData.put("namaunit", "\"" + akses.getNamaunit() + "\"");
+		roleData.put("isadmin", "\"" + akses.getIsadmin() + "\"");
+
+		SessionInjector.injectDataMap(driver, roleData);
+    }
     
     public void clickLogout() {
         logoutButton.click();

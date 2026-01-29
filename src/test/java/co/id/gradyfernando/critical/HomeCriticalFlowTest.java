@@ -1,5 +1,6 @@
 package co.id.gradyfernando.critical;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -39,9 +40,15 @@ public class HomeCriticalFlowTest extends AndroidBaseTest {
 		SessionInjector.injectToken(driver, user.getToken());
 
 		// Set User Data to Session
-		// SessionInjector.injectData(driver, "iduser", user.getIduser());
-		SessionInjector.injectData(driver, "nama", "\"" + user.getNama() + "\"");
-		// SessionInjector.injectData(driver, "username", user.getUsername());
+		HashMap<String, String> userData = new HashMap<>();
+		userData.put("action", "userdata");
+		userData.put("nama", "\"" + user.getNama() + "\"");
+		userData.put("iduser", "\"" + user.getIduser() + "\"");
+		userData.put("username", "\"" + user.getUsername() + "\"");
+		userData.put("email", "\"" + user.getEmail() + "\"");
+		userData.put("num_role", "\"" + user.getNum_role() + "\"");
+
+		SessionInjector.injectDataMap(driver, userData);
 	}
 
 	@Test
@@ -63,7 +70,10 @@ public class HomeCriticalFlowTest extends AndroidBaseTest {
 
 		// Set Role
 		Assert.assertTrue(isSekretarisExist);
+		hakAksesPage.injectSession(selectedAkses);
 		hakAksesPage.setRole(selectedRole);
+		
+		HakAksesApiTest.setAkses(user, selectedAkses);
 
 		Thread.sleep(2000);
 	}

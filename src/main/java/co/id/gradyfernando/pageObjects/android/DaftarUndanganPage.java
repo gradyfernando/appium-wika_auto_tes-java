@@ -6,8 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
+import org.testng.SkipException;
 
+import co.id.gradyfernando.report.ExtentLogger;
 import co.id.gradyfernando.utils.AndroidActions;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -26,14 +27,21 @@ public class DaftarUndanganPage extends AndroidActions {
     public void selectItemWithStatus(String status) {
 		List<WebElement> statusLabelElement = driver.findElements(By.id("co.id.integra.weoffice:id/tvStatus"));
         int undanganSize = statusLabelElement.size();
+        boolean isSelected = false;
 
         for (int i=0; i<undanganSize; i++) {
             String statusName = statusLabelElement.get(i).getText();
             
             if (statusName.toLowerCase().contains(status.toLowerCase())) {
                 statusLabelElement.get(i).click();
+                isSelected = true;
                 break;
             }
+        }
+
+        if (isSelected == false) {
+            ExtentLogger.skip("Tidak ditemukan surat dengan status :\" + status");
+            throw new SkipException("Skip Test - Tidak ditemukan surat dengan status :" + status);
         }
     }
 

@@ -1,10 +1,15 @@
 package co.id.gradyfernando.android;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import co.id.gradyfernando.api.HakAksesApiTest;
 import co.id.gradyfernando.api.LoginApiTest;
+import co.id.gradyfernando.model.Akses;
 import co.id.gradyfernando.model.User;
 import co.id.gradyfernando.pageObjects.android.ArahkanSuratDialog;
 import co.id.gradyfernando.pageObjects.android.DaftarUndanganPage;
@@ -12,20 +17,23 @@ import co.id.gradyfernando.pageObjects.android.DetailUndanganPage;
 import co.id.gradyfernando.pageObjects.android.HakAksesPage;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.pageObjects.android.KirimInformasikanPage;
+import co.id.gradyfernando.pageObjects.android.LoginPage;
 import co.id.gradyfernando.pageObjects.android.PencarianUserDialog;
 import co.id.gradyfernando.pageObjects.android.PertimbanganSuratDialog;
 import co.id.gradyfernando.pageObjects.android.PilihUserPage;
 import co.id.gradyfernando.pageObjects.android.TolakSuratDialog;
-import co.id.gradyfernando.report.ExtentLogger;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
-import co.id.gradyfernando.utils.SessionInjector;
 
 public class SekretarisRoleTest extends AndroidBaseTest {
 
     private User user;
+    private boolean isSelectedRoleExist = false;
 
     @BeforeClass
     public void loginSekretaris() throws InterruptedException {
+        // Data to input
+		var selectedRole = "sekretaris";
+
         // Get data first
 		user = LoginApiTest.login(
 			"TK171561",
@@ -34,16 +42,32 @@ public class SekretarisRoleTest extends AndroidBaseTest {
 			"2.2.0"
 		);
 		
-		// Set Token
-		SessionInjector.injectToken(driver, user.getToken());
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.injectSession(user);
 
-        Thread.sleep(2000);
-
-        HakAksesPage hakAksesPage = new HakAksesPage(driver);
+        // Set role
+        List<Akses> aksesList = HakAksesApiTest.getAkses(user.getToken());
+		HakAksesPage hakAksesPage = new HakAksesPage(driver);
         hakAksesPage.setActivity();
-        hakAksesPage.setRole("sekretaris");
 
-        Thread.sleep(2000);
+		aksesList.forEach(new Consumer<Akses>(){
+            @Override
+            public void accept(Akses akses) {
+				if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
+					isSelectedRoleExist = true;
+
+                    HakAksesApiTest.setAkses(user, akses);
+                    hakAksesPage.injectSession(akses);
+                    
+                    hakAksesPage.setRole(selectedRole);
+				}
+            }
+        });
+
+		// Set Role
+		Assert.assertTrue(isSelectedRoleExist);
+
+        Thread.sleep(1000);
     }
 
     @Test(groups = {"smoke"})
@@ -148,7 +172,7 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         Assert.assertTrue(buttonText.contains("Tolak"));
 
         Assert.assertFalse(tolakSuratDialog.isKirimButtonEnabled());
-        tolakSuratDialog.setKeterangan("Undangan ditolak - AutoT");
+        tolakSuratDialog.setKeterangan("Undangan ditolak - AutoTest");
         Assert.assertTrue(tolakSuratDialog.isKirimButtonEnabled());
     }
 

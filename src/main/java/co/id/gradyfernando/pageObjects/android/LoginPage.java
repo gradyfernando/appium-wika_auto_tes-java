@@ -1,5 +1,7 @@
 package co.id.gradyfernando.pageObjects.android;
 
+import java.util.HashMap;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,7 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.google.common.collect.ImmutableMap;
 
+import co.id.gradyfernando.model.Akses;
+import co.id.gradyfernando.model.User;
 import co.id.gradyfernando.utils.AndroidActions;
+import co.id.gradyfernando.utils.SessionInjector;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -55,6 +60,19 @@ public class LoginPage extends AndroidActions {
 		}
 		
 	}
+
+    public void injectSession(User user) {
+		HashMap<String, String> userData = new HashMap<>();
+		userData.put("action", "userdata");
+		userData.put("nama", "\"" + user.getNama() + "\"");
+		userData.put("iduser", "\"" + user.getIduser() + "\"");
+		userData.put("username", "\"" + user.getUsername() + "\"");
+		userData.put("email", "\"" + user.getEmail() + "\"");
+		userData.put("num_role", "\"" + user.getNum_role() + "\"");
+
+		SessionInjector.injectToken(driver, user.getToken());
+		SessionInjector.injectDataMap(driver, userData);
+    }
 
 //	public void setNameField(String name) {
 //		nameField.sendKeys(name);

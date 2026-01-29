@@ -51,7 +51,7 @@ public class LoginTest extends AndroidBaseTest {
 
         Thread.sleep(2000);
 
-        Assert.assertNotNull(driver.findElement(By.id("co.id.integra.weoffice:id/tvTitleHint")));
+        Assert.assertNotNull(driver.findElement(By.id("co.id.integra.weoffice:id/tvWarning")));
     }
 
     @Test

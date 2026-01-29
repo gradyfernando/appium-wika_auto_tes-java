@@ -88,6 +88,11 @@ public class DetailUndanganPage extends AndroidActions {
         approveButton.click();
     }
 
+    public void clickTolak() {
+        scrollToText("Tolak");
+        tolakButton.click();
+    }
+
     public void checkSekretarisButton() {
         scrollToText("Approve");
         Assert.assertTrue(approveButton.isDisplayed());

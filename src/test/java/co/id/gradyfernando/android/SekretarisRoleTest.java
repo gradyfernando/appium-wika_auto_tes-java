@@ -1,5 +1,6 @@
 package co.id.gradyfernando.android;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,7 @@ import co.id.gradyfernando.pageObjects.android.KirimInformasikanPage;
 import co.id.gradyfernando.pageObjects.android.PencarianUserDialog;
 import co.id.gradyfernando.pageObjects.android.PertimbanganSuratDialog;
 import co.id.gradyfernando.pageObjects.android.PilihUserPage;
+import co.id.gradyfernando.pageObjects.android.TolakSuratDialog;
 import co.id.gradyfernando.report.ExtentLogger;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
 import co.id.gradyfernando.utils.SessionInjector;
@@ -122,6 +124,32 @@ public class SekretarisRoleTest extends AndroidBaseTest {
         
         Thread.sleep(500);
         arahkanSuratDialog.clickArahkan();
+    }
+
+    @Test(groups = {"transaksi", "sekreatris"})
+    public void test_tolakSurat() throws InterruptedException {
+        HomePage homePage = new HomePage(driver);
+        homePage.setActivity();
+        Thread.sleep(1000);
+        homePage.openProfileMenu();
+        homePage.selectMenuFromAllMenu("Undangan Masuk");
+
+        DaftarUndanganPage daftarUndanganPage = new DaftarUndanganPage(driver);
+        daftarUndanganPage.selectItemWithStatus("butuh approval");
+
+        DetailUndanganPage detailUndanganPage = new DetailUndanganPage(driver);
+        detailUndanganPage.clickTolak();
+
+        TolakSuratDialog tolakSuratDialog = new TolakSuratDialog(driver);
+        String titleDialog = tolakSuratDialog.getTitle();
+        Assert.assertTrue(titleDialog.contains("Tolak"));
+
+        String buttonText = tolakSuratDialog.getSubmitButtonTitle();
+        Assert.assertTrue(buttonText.contains("Tolak"));
+
+        Assert.assertFalse(tolakSuratDialog.isKirimButtonEnabled());
+        tolakSuratDialog.setKeterangan("Undangan ditolak - AutoT");
+        Assert.assertTrue(tolakSuratDialog.isKirimButtonEnabled());
     }
 
     @Test(groups = {"transaksi", "searchuser"})

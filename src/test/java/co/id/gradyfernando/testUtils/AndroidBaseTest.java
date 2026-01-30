@@ -1,16 +1,22 @@
 package co.id.gradyfernando.testUtils;
 
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.google.gson.Gson;
 
 import co.id.gradyfernando.api.HakAksesApiTest;
 import co.id.gradyfernando.api.LoginApiTest;
@@ -24,6 +30,8 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 public class AndroidBaseTest extends AppiumUtils {
 	
@@ -71,25 +79,50 @@ public class AndroidBaseTest extends AppiumUtils {
         // Set role
         List<Akses> aksesList = HakAksesApiTest.getAkses(user.getToken());
 		HakAksesPage hakAksesPage = new HakAksesPage(driver);
-        hakAksesPage.setActivity();
 
-		aksesList.forEach(new Consumer<Akses>(){
-            @Override
-            public void accept(Akses akses) {
-				if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
-					isSelectedRoleExist = true;
+		if (aksesList.size() > 1) {
+			hakAksesPage.setActivity();
 
-                    HakAksesApiTest.setAkses(user, akses);
-                    hakAksesPage.injectSession(akses);
-                    
-                    hakAksesPage.setRole(selectedRole);
+			aksesList.forEach(new Consumer<Akses>(){
+				@Override
+				public void accept(Akses akses) {
+					if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
+						isSelectedRoleExist = true;
+
+						Map<String, Object> responseData = HakAksesApiTest.setAkses(user, akses);
+						List<String> menus = new ObjectMapper().convertValue(responseData.get("menu").toString(), new TypeReference<List<String>>() {});
+
+						hakAksesPage.injectSession(akses);
+						hakAksesPage.injectMenuData(menus);
+						
+						hakAksesPage.setRole(selectedRole);
+					}
 				}
-            }
-        });
+			});
+		} else {
+			Akses akses = aksesList.get(0);
+			isSelectedRoleExist = true;
 
-		// Set Role
+			Map<String, Object> responseData = HakAksesApiTest.setAkses(user, akses);
+			String jsonResponse = new Gson().toJson(responseData);
+
+			List<String> menus = new ArrayList<String>();
+			try {
+				JSONObject jsonObject = new JSONObject(jsonResponse);
+				JSONArray menuJson = jsonObject.getJSONArray("menu");
+				
+				for (int i = 0; i < menuJson.length(); i++) {
+					menus.add(menuJson.getString(i));
+				}
+			} catch (org.json.JSONException e) {
+				e.printStackTrace();
+			}
+
+			hakAksesPage.injectSession(akses);
+			hakAksesPage.injectMenuData(menus);
+		}
+        
 		Assert.assertTrue(isSelectedRoleExist);
-
         Thread.sleep(1000);
 	}
 

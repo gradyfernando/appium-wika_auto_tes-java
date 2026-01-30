@@ -66,6 +66,13 @@ public class HakAksesPage extends AndroidActions {
 
 		SessionInjector.injectDataMap(driver, roleData);
     }
+
+    public void injectMenuData(List<String> listMenu) {
+		HashMap<String, String> menuData = new HashMap<>();
+		menuData.put("action", "menu");
+		menuData.put("menu", "\"" + String.join(",", listMenu) + "\"");
+        SessionInjector.injectDataMap(driver, menuData);
+    }
     
     public void clickLogout() {
         logoutButton.click();

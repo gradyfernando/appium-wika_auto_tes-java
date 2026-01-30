@@ -1,10 +1,17 @@
 [
     {
         "username": "ET133126",
-        "password": "ET133126"
+        "password": "ET133126",
+        "role": "senior manager"
     },
     {
         "username": "TK171561",
-        "password": "TK171561"
+        "password": "TK171561",
+        "role": "sekretaris"
+    },
+    {
+        "username": "ES951927",
+        "password": "ES951927",
+        "role": "direktur utama"
     }
 ]

@@ -37,6 +37,20 @@ public class DaftarDraftPage extends AndroidActions {
         return "";
     }
 
+    public void selectItemByNomor(String nomorSurat) {
+        List<WebElement> noSuratLabelElement = driver.findElements(By.id("co.id.integra.weoffice:id/tvNoSurat"));
+        int undanganSize = noSuratLabelElement.size();
+
+        for (int i=0; i<undanganSize; i++) {
+            String statusName = noSuratLabelElement.get(i).getText();
+            
+            if (statusName.toLowerCase().contains(nomorSurat.toLowerCase())) {
+                noSuratLabelElement.get(i).click();
+                break;
+            }
+        }
+    }
+
     public int countData() {
         try {
             WebElement hintElement = driver.findElement(By.id("co.id.integra.weoffice:id/tvTitleHint"));

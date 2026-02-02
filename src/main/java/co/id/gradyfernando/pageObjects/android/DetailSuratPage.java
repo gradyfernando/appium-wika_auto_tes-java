@@ -50,6 +50,7 @@ public class DetailSuratPage extends AndroidActions {
     }
 
     public void clickDisposisikan() {
+        scrollToText("Kirim Disposisi");
         disposisiButton.click();
     }
 

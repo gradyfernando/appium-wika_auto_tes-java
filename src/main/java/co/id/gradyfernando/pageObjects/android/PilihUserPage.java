@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import co.id.gradyfernando.utils.AndroidActions;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
@@ -37,10 +38,29 @@ public class PilihUserPage extends AndroidActions {
         simpanButton.click();
     }
 
+    public void selectUserByText(String user) {
+        scrollToText(user);
+
+        List<WebElement> parentElements = driver.findElements(AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"co.id.integra.weoffice:id/clDataContainer\")"));
+        for (WebElement webElement : parentElements) {
+            WebElement namaElement = webElement.findElement(By.className("co.id.integra.weoffice:id/tvTitle"));
+            WebElement jabatanElement = webElement.findElement(By.className("co.id.integra.weoffice:id/tvSubtitle"));
+
+            if (namaElement.getText().toLowerCase().equals(user.toLowerCase()) || jabatanElement.getText().toLowerCase().equals(user.toLowerCase())) {
+                namaElement.click();
+            }
+        }
+        
+    }
+
+    public void selectUserByIndex(int index) {
+        List<WebElement> selectionElements = driver.findElements(AppiumBy.androidUIAutomator("new UiSelector().resourceId(\"co.id.integra.weoffice:id/clDataContainer\")"));
+        selectionElements.get(index).click();
+    }
+
     public void verifyUserAfterSearch(List<String> userList) {
         List<WebElement> parentElements = driver.findElements(By.id("co.id.integra.weoffice:id/clDataContainer"));
         int userCount = parentElements.size();
-        System.out.println("userCount : " + userCount);
         
         for (String namaUser : userList) {
             scrollToText(namaUser);

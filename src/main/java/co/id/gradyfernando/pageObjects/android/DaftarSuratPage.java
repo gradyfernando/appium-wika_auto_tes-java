@@ -18,6 +18,8 @@ public class DaftarSuratPage extends AndroidActions {
 
     @AndroidFindBy(id = "co.id.integra.weoffice:id/rvFilter")
     private WebElement rvFilter;
+    @AndroidFindBy(id = "co.id.integra.weoffice:id/action_search")
+    WebElement searchButton;
 
     public DaftarSuratPage(AndroidDriver driver) {
         super(driver);
@@ -84,6 +86,10 @@ public class DaftarSuratPage extends AndroidActions {
         }
 
         return "";
+    }
+
+    public void clickSearch() {
+        searchButton.click();
     }
     
     public int countData() {

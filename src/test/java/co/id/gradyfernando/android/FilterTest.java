@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import co.id.gradyfernando.pageObjects.android.AdvanceFilterDialog;
 import co.id.gradyfernando.pageObjects.android.DaftarSuratPage;
+import co.id.gradyfernando.pageObjects.android.FilterDialog;
 import co.id.gradyfernando.pageObjects.android.HomePage;
 import co.id.gradyfernando.testUtils.AndroidBaseTest;
 
@@ -51,6 +52,19 @@ public class FilterTest extends AndroidBaseTest {
         advanceFilterDialog.selectFilter(selectedStatus);
 
         daftarSuratPage.selectItemWithStatus(selectedStatus);
+    }
+
+    @Test
+    public void test_filterSurat_noSurat() throws InterruptedException {
+        DaftarSuratPage daftarSuratPage = new DaftarSuratPage(driver);
+        daftarSuratPage.clickSearch();
+
+        FilterDialog filterDialog = new FilterDialog(driver);
+        filterDialog.checkAttribute("No Surat");
+        filterDialog.setKeyword("SE.01.00");
+        filterDialog.submitPencarian();
+        
+        
     }
 
 

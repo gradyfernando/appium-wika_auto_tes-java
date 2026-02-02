@@ -53,7 +53,7 @@ public class AndroidActions extends AppiumUtils {
 									"left", 100,
 									"top", 100,
 									"width", 200,
-									"height", 200,
+									"height", 500,
 									"direction", "down",
 									"percent", 100.0
 								));

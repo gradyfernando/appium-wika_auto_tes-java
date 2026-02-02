@@ -82,6 +82,7 @@ public class AndroidBaseTest extends AppiumUtils {
 
 		if (aksesList.size() > 1) {
 			hakAksesPage.setActivity();
+			Thread.sleep(1000);
 
 			aksesList.forEach(new Consumer<Akses>(){
 				@Override
@@ -89,8 +90,7 @@ public class AndroidBaseTest extends AppiumUtils {
 					if (akses.getNamarole().toLowerCase().equals(selectedRole.toLowerCase())) {
 						isSelectedRoleExist = true;
 
-						Map<String, Object> responseData = HakAksesApiTest.setAkses(user, akses);
-						List<String> menus = new ObjectMapper().convertValue(responseData.get("menu").toString(), new TypeReference<List<String>>() {});
+						List<String> menus = getMenuFromAPI(user, akses);
 
 						hakAksesPage.injectSession(akses);
 						hakAksesPage.injectMenuData(menus);
@@ -102,21 +102,7 @@ public class AndroidBaseTest extends AppiumUtils {
 		} else {
 			Akses akses = aksesList.get(0);
 			isSelectedRoleExist = true;
-
-			Map<String, Object> responseData = HakAksesApiTest.setAkses(user, akses);
-			String jsonResponse = new Gson().toJson(responseData);
-
-			List<String> menus = new ArrayList<String>();
-			try {
-				JSONObject jsonObject = new JSONObject(jsonResponse);
-				JSONArray menuJson = jsonObject.getJSONArray("menu");
-				
-				for (int i = 0; i < menuJson.length(); i++) {
-					menus.add(menuJson.getString(i));
-				}
-			} catch (org.json.JSONException e) {
-				e.printStackTrace();
-			}
+			List<String> menus = getMenuFromAPI(user, akses);
 
 			hakAksesPage.injectSession(akses);
 			hakAksesPage.injectMenuData(menus);
@@ -124,6 +110,25 @@ public class AndroidBaseTest extends AppiumUtils {
         
 		Assert.assertTrue(isSelectedRoleExist);
         Thread.sleep(1000);
+	}
+
+	private List<String> getMenuFromAPI(User user, Akses akses) {
+		Map<String, Object> responseData = HakAksesApiTest.setAkses(user, akses);
+		String jsonResponse = new Gson().toJson(responseData);
+
+		List<String> menus = new ArrayList<String>();
+		try {
+			JSONObject jsonObject = new JSONObject(jsonResponse);
+			JSONArray menuJson = jsonObject.getJSONArray("menu");
+			
+			for (int i = 0; i < menuJson.length(); i++) {
+				menus.add(menuJson.getString(i));
+			}
+		} catch (org.json.JSONException e) {
+			e.printStackTrace();
+		}
+
+		return menus;
 	}
 
 	public void pressBackButton() {
